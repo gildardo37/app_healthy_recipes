@@ -1,0 +1,7 @@
+{
+  "name": "healthy-recipes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
