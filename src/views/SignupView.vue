@@ -2,10 +2,10 @@
   <default-sign-layout
     :onSubmit="login"
     :route="route"
-    footerLabel="Don't have an account?"
-    submitTitle="LOGIN"
-    title="Login"
-    src="/assets/login-background.svg"
+    footerLabel="Already have an account?"
+    submitTitle="Register"
+    title="Sign up"
+    src="/assets/singup-background.svg"
   >
     <ion-list lines="full">
       <custom-input

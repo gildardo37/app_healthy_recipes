@@ -59,6 +59,7 @@ export default defineComponent({
 <style scoped>
 .sign-image {
   height: 270px;
+  padding: 0 80px;
   box-shadow: none;
 }
 .sign-image ion-title {
