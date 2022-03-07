@@ -2,8 +2,8 @@
   <ion-page>
     <ion-header>
       <ion-toolbar class="sign-image">
-        <ion-img :src="src"></ion-img>
         <ion-title>{{ title }}</ion-title>
+        <ion-img :src="src"></ion-img>
       </ion-toolbar>
     </ion-header>
 
@@ -63,19 +63,25 @@ export default defineComponent({
 }
 .sign-image ion-title {
   text-align: center;
-  margin-top: 36px;
-  font-weight: 600;
-  font-size: 24px;
-  color: #003049;
+  padding: 20px;
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: bold;
+  color: #22242b;
 }
 ion-header::after {
   display: none;
 }
 ion-img {
+  margin-top: 16px;
   height: 100%;
 }
 .log-button {
   margin: 24px 16px 0 16px;
+  padding: 10;
+}
+.log-button button {
+  border-radius: 50px !important;
 }
 ion-label {
   width: 100%;
@@ -88,7 +94,8 @@ ion-label {
 }
 a {
   font-family: Roboto;
-  font-weight: 500;
+  font-weight: 600;
+  text-decoration: none;
   color: black !important;
   margin-left: 5px;
 }

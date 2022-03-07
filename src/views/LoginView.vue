@@ -5,13 +5,13 @@
     footerLabel="Don't have an account?"
     submitTitle="LOGIN"
     title="Login"
-    src="/assets/singup-background.png"
+    src="/assets/singup-background.svg"
   >
     <ion-list lines="full">
       <custom-input
         type="text"
         :onChange="onUsernameChange"
-        placeholder="Username"
+        placeholder="E-mail Addres"
       />
       <custom-input
         type="password"
@@ -36,8 +36,8 @@ export default defineComponent({
       username: "",
       password: "",
       route: {
-        to: "/register",
-        label: "Register",
+        to: "/signup",
+        label: "Sign up",
       },
     };
   },

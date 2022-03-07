@@ -1,5 +1,5 @@
 <template>
-  <ion-item>
+  <ion-item lines="none">
     <ion-label position="stacked">{{ placeholder }}</ion-label>
     <ion-input :type="type" @input="onChange"></ion-input>
   </ion-item>
@@ -25,7 +25,13 @@ ion-item {
 }
 ion-label {
   font-size: 12px;
-  font-family: Roboto;
-  color: #92949c;
+  font-family: Manrope;
+  color: red;
+}
+ion-input {
+  margin-top: 10px;
+  background: #f2f2f2;
+  border-radius: 8px;
+  padding-left: 10px !important;
 }
 </style>
