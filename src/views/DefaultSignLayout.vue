@@ -28,7 +28,6 @@ import {
   IonHeader,
   IonPage,
   IonTitle,
-  IonToolbar,
   IonImg,
   IonButton,
 } from "@ionic/vue";
@@ -41,7 +40,6 @@ export default defineComponent({
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar,
     IonImg,
     IonButton,
   },
@@ -63,6 +61,7 @@ export default defineComponent({
   box-shadow: none;
 }
 .sign-image ion-title {
+  height: fit-content;
   text-align: center;
   padding: 20px;
   font-family: Manrope;
@@ -74,8 +73,8 @@ ion-header::after {
   display: none;
 }
 ion-img {
-  margin-top: 16px;
-  height: 100%;
+  margin-top: 50px;
+  width: 230px;
 }
 .log-button {
   margin: 24px 16px 0 16px;

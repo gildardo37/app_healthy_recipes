@@ -8,16 +8,9 @@
     src="/assets/singup-background.svg"
   >
     <ion-list lines="full">
-      <custom-input
-        type="text"
-        :onChange="onUsernameChange"
-        placeholder="E-mail Addres"
-      />
-      <custom-input
-        type="password"
-        :onChange="onPasswordChange"
-        placeholder="Password"
-      />
+      <custom-input name="name" type="text" placeholder="Full Name" />
+      <custom-input name="email" type="text" placeholder="E-mail Address" />
+      <custom-input name="password" type="password" placeholder="Password" />
     </ion-list>
   </default-sign-layout>
 </template>
@@ -36,8 +29,8 @@ export default defineComponent({
       username: "",
       password: "",
       route: {
-        to: "/signup",
-        label: "Sign up",
+        to: "/login",
+        label: "Log in",
       },
     };
   },
