@@ -11,6 +11,17 @@
       <custom-input name="name" type="text" placeholder="Full Name" />
       <custom-input name="email" type="text" placeholder="E-mail Address" />
       <custom-input name="password" type="password" placeholder="Password" />
+      <custom-select title="Genre">
+        <template>
+          <ion-select-option value="f">Female</ion-select-option>
+          <ion-select-option value="m">Male</ion-select-option>
+        </template>
+      </custom-select>
+      <div class="meta-wrappers">
+        <custom-input name="age" type="number" placeholder="Age" />
+        <custom-input name="height" type="number" placeholder="Height (cm)" />
+        <custom-input name="weight" type="number" placeholder="Weight (kg)" />
+      </div>
     </ion-list>
   </default-sign-layout>
 </template>
@@ -18,12 +29,13 @@
 <script lang="ts">
 import { IonList } from "@ionic/vue";
 import DefaultSignLayout from "./DefaultSignLayout.vue";
+import CustomSelect from "@/components/CustomSelect.vue";
 import CustomInput from "@/components/CustomInput.vue";
 import { defineComponent } from "@vue/runtime-core";
 
 export default defineComponent({
   name: "LoginView",
-  components: { DefaultSignLayout, IonList, CustomInput },
+  components: { DefaultSignLayout, IonList, CustomInput, CustomSelect },
   data() {
     return {
       username: "",
@@ -77,5 +89,9 @@ export default defineComponent({
 }
 #container a {
   text-decoration: none;
+}
+.meta-wrappers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 </style>
