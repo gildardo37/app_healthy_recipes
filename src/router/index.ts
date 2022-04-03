@@ -3,11 +3,13 @@ import { RouteRecordRaw } from "vue-router";
 import Login from "@/views/LoginView.vue";
 import Profile from "@/views/ProfileView.vue";
 import Signup from "@/views/SignupView.vue";
+import EditProfile from "@/views/EditProfile.vue";
+import ChangePassword from "@/views/ChangePassword.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/profile",
+    redirect: "/changepassword",
   },
   {
     path: "/login",
@@ -23,6 +25,16 @@ const routes: Array<RouteRecordRaw> = [
     path: "/profile",
     name: "profile",
     component: Profile,
+  },
+  {
+    path: "/editprofile",
+    name: "editprofile",
+    component: EditProfile,
+  },
+  {
+    path: "/changepassword",
+    name: "changepassword",
+    component: ChangePassword,
   },
 ];
 

@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import VNav from "@/components/VNav.vue";
+import VNav from "@/components/Nav.vue";
 import MetaDisplayer from "@/components/MetaDisplayer.vue";
 import RowProfile from "@/components/RowProfile.vue";
 export default defineComponent({
