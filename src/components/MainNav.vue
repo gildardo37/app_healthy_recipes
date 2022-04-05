@@ -1,0 +1,92 @@
+<template>
+  <nav class="sub_menu">
+    <div :class="classes.home">
+      <div><img src="/assets/home.svg" alt="home" srcset="" /></div>
+      <span>Home</span>
+    </div>
+    <div :class="classes.stats">
+      <div><img src="/assets/stats.svg" alt="stats" srcset="" /></div>
+      <span>My stats</span>
+    </div>
+    <div :class="classes.newRecipes">
+      <div><img src="/assets/search.svg" alt="newRecipes" srcset="" /></div>
+      <span>New Recipes</span>
+    </div>
+    <div :class="classes.calendar">
+      <div><img src="/assets/calendar.svg" alt="calendar" srcset="" /></div>
+      <span>My meals</span>
+    </div>
+  </nav>
+</template>
+
+<script lang="ts">
+import { defineComponent, computed } from "vue";
+import { useRouter } from "vue-router";
+
+export default defineComponent({
+  setup() {
+    const router = useRouter();
+    const { currentRoute } = router;
+    const route = currentRoute.value.path.toString().replace("/", "");
+    console.log(route)
+    const newRecipesPaths = [''];
+    const statsPaths = ['mystats'];
+    const calendarPaths = ['mymeals'];
+
+    const classes = computed(() => {
+      return {
+        home: `item ${route == 'home' && "selected"}`,
+        newRecipes: `item ${newRecipesPaths.includes(route) && "selected"}`,
+        stats: `item ${statsPaths.includes(route) && "selected"}`,
+        calendar: `item ${calendarPaths.includes(route) && "selected"}`,
+      };
+    });
+    return {
+      classes,
+    };
+  },
+});
+</script>
+
+
+<style scoped>
+.sub_menu {
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 15px 35px;
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* color/neutral/grey/dark */
+
+  color: #b8b7be;
+}
+
+.item div img {
+  width: 18px;
+  height: 18px;
+  fill: red;
+}
+
+.selected {
+  color: #fe9d5c;
+}
+</style>
