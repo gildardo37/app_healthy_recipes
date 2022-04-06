@@ -5,11 +5,12 @@ import Profile from "@/views/ProfileView.vue";
 import Signup from "@/views/SignupView.vue";
 import EditProfile from "@/views/EditProfile.vue";
 import ChangePassword from "@/views/ChangePassword.vue";
+import MyMeals from "@/views/MyMeals.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/changepassword",
+    redirect: "/login",
   },
   {
     path: "/login",
@@ -35,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/changepassword",
     name: "changepassword",
     component: ChangePassword,
+  },
+  {
+    path: "/mymeals",
+    name: "mymeals",
+    component: MyMeals,
   },
 ];
 
