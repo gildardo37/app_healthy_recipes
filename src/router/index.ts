@@ -10,7 +10,7 @@ import MyMeals from "@/views/MyMeals.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/",
   },
   {
     path: "/login",

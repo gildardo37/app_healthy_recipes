@@ -10,7 +10,7 @@
     <ion-list lines="full">
       <custom-input
         type="text"
-        :onChange="onUsernameChange"
+        :onChange="onEmailChange"
         placeholder="E-mail Addres"
       />
       <custom-input
@@ -27,13 +27,14 @@ import { IonList } from "@ionic/vue";
 import DefaultSignLayout from "./DefaultSignLayout.vue";
 import CustomInput from "@/components/CustomInput.vue";
 import { defineComponent } from "@vue/runtime-core";
+import client from "@/client";
 
 export default defineComponent({
   name: "LoginView",
   components: { DefaultSignLayout, IonList, CustomInput },
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
       route: {
         to: "/signup",
@@ -42,14 +43,31 @@ export default defineComponent({
     };
   },
   methods: {
-    onUsernameChange(event: any) {
-      this.username = event.target.value;
+    onEmailChange(event: any) {
+      this.email = event.target.value;
     },
     onPasswordChange(event: any) {
       this.password = event.target.value;
     },
-    login() {
-      console.log("Login");
+    async login() {
+      try {
+        const login_response: any = await client.login(
+          this.email,
+          this.password
+        );
+
+        if (!login_response.token) {
+          throw new Error("User or email invalid");
+        }
+
+        client.saveToken(login_response.token);
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        this.$router.push("/signup");
+        console.log("upto here");
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });
