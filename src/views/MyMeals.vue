@@ -53,131 +53,15 @@
 <script>
 import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
+import client from "@/client";
+
 
 export default defineComponent({
   name: "ProfileView",
   components: { VNav },
   data() {
     return {
-      allMeals: [
-        {
-          id_meal: 95,
-          calories: "3000.00",
-          protein: "109.42",
-          carbohydrates: "88.93",
-          fat: "128.63",
-          date_created: "2022-04-03T02:39:22.000Z",
-          meals: [
-            {
-              id_meal: 275,
-              title: "Homemade Lemon Bars",
-              type: "Breakfast",
-              checked: false,
-              ready_in_minutes: 45,
-              image: "http://www.tasteofhome.com/Recipes/homemade-lemon-bars",
-              servings: 9,
-            },
-            {
-              id_meal: 285,
-              title: "Shrimp Scampi with Artichokes and Basil",
-              type: "Meal",
-              checked: false,
-              ready_in_minutes: 17,
-              image:
-                "http://www.foodnetwork.com/recipes/paula-deen/shrimp-scampi-with-artichokes-and-basil-recipe.html",
-              servings: 4,
-            },
-            {
-              id_meal: 295,
-              title: "Salmon En Croute With Tarragon Cream Sauce",
-              type: "Dinner",
-              checked: false,
-              ready_in_minutes: 45,
-              image:
-                "https://spoonacular.com/salmon-en-croute-with-tarragon-cream-sauce-659068",
-              servings: 2,
-            },
-          ],
-        },
-        {
-          id_meal: 155,
-          calories: "3000.00",
-          protein: "109.42",
-          carbohydrates: "88.93",
-          fat: "128.63",
-          date_created: "2022-04-05T11:42:42.000Z",
-          meals: [
-            {
-              id_meal: 455,
-              title: "Homemade Lemon Bars",
-              type: "Breakfast",
-              checked: false,
-              ready_in_minutes: 45,
-              image: "http://www.tasteofhome.com/Recipes/homemade-lemon-bars",
-              servings: 9,
-            },
-            {
-              id_meal: 465,
-              title: "Shrimp Scampi with Artichokes and Basil",
-              type: "Meal",
-              checked: false,
-              ready_in_minutes: 17,
-              image:
-                "http://www.foodnetwork.com/recipes/paula-deen/shrimp-scampi-with-artichokes-and-basil-recipe.html",
-              servings: 4,
-            },
-            {
-              id_meal: 475,
-              title: "Salmon En Croute With Tarragon Cream Sauce",
-              type: "Dinner",
-              checked: false,
-              ready_in_minutes: 45,
-              image:
-                "https://spoonacular.com/salmon-en-croute-with-tarragon-cream-sauce-659068",
-              servings: 2,
-            },
-          ],
-        },
-        {
-          id_meal: 165,
-          calories: "3000.00",
-          protein: "109.42",
-          carbohydrates: "88.93",
-          fat: "128.63",
-          date_created: "2022-04-05T11:42:42.000Z",
-          meals: [
-            {
-              id_meal: 485,
-              title: "Homemade Lemon Bars",
-              type: "Breakfast",
-              checked: false,
-              ready_in_minutes: 45,
-              image: "http://www.tasteofhome.com/Recipes/homemade-lemon-bars",
-              servings: 9,
-            },
-            {
-              id_meal: 495,
-              title: "Shrimp Scampi with Artichokes and Basil",
-              type: "Meal",
-              checked: false,
-              ready_in_minutes: 17,
-              image:
-                "http://www.foodnetwork.com/recipes/paula-deen/shrimp-scampi-with-artichokes-and-basil-recipe.html",
-              servings: 4,
-            },
-            {
-              id_meal: 505,
-              title: "Salmon En Croute With Tarragon Cream Sauce",
-              type: "Dinner",
-              checked: false,
-              ready_in_minutes: 45,
-              image:
-                "https://spoonacular.com/salmon-en-croute-with-tarragon-cream-sauce-659068",
-              servings: 2,
-            },
-          ],
-        },
-      ].reverse(),
+      allMeals: [],
       today: [],
     };
   },
@@ -186,20 +70,18 @@ export default defineComponent({
   },
   methods: {
     formatDate(value) {
-      const date = new Date(value);
-      return date.toDateString();
+      return new Date(value).toDateString();
     },
-    getToday(){
-      this.today = this.allMeals.filter((res) => {
+    async getToday(){
+      const { data } = await client.getMyMeals();
+      this.today = data.filter((res) => {
         const date1 = new Date(res.date_created).toDateString();
         const date2 = new Date().toDateString();
-        console.log(date1, date2);
         if(date1 === date2) return res;
       });
-      this.allMeals = this.allMeals.filter((res) => {
+      this.allMeals = data.filter((res) => {
         const date1 = new Date(res.date_created).toDateString();
         const date2 = new Date().toDateString();
-        console.log(date1, date2);
         if(date1 !== date2) return res;
       });
     }
