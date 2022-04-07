@@ -1,33 +1,56 @@
 <template>
   <main>
-    <v-nav title="Profile"></v-nav>
+    <v-nav title="My Meals"></v-nav>
     <div class="bg-orange">
       <div class="card_content">
-        <template v-for="(myMeals, index) in allMeals" :key="index">
-          <section class="card" v-for="m in myMeals" :key="m.id_meal">
-            <div class="img">
-              <img
-                src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
-                alt=""
-              />
-            </div>
-            <div class="content">
-              <!-- <h3>{{ m.title }}</h3> -->
-              <h3>{{ m }}</h3>
-              <!-- <small>{{ meals.calories }}</small>
-              <div class="content_between">
-                <span class="blue_text">{{ m.type }}</span>
-                <h3>{{ m.ready_in_minutes }} min</h3>
-              </div> -->
-            </div>
-          </section>
+        <template v-for="meal in today" :key="meal.id_meal">
+          <h3>Todays Meals</h3>
+          <template v-for="m in meal.meals" :key="m.id_meal">
+            <section class="card" >
+              <div class="img">
+                <img
+                  src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="content">
+                <h3>{{ m.title }}</h3>
+                <small>{{ formatDate(meal.date_created) }}</small>
+                <div class="content_between">
+                  <span class="blue_text">{{ m.type }}</span>
+                  <h3>{{ m.ready_in_minutes }} min</h3>
+                </div>
+              </div>
+            </section>
+          </template>
+        </template>
+        <template v-for="(meal, index) in allMeals" :key="meal.id_meal">
+          <h3 v-if="index == 0">All Meals</h3>
+          <template v-for="m in meal.meals" :key="m.id_meal">
+            <section class="card">
+              <div class="img">
+                <img
+                  src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="content">
+                <h3>{{ m.title }}</h3>
+                <small>{{ formatDate(meal.date_created) }}</small>
+                <div class="content_between">
+                  <span class="blue_text">{{ m.type }}</span>
+                  <h3>{{ m.ready_in_minutes }} min</h3>
+                </div>
+              </div>
+            </section>
+          </template>
         </template>
       </div>
     </div>
   </main>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
 
@@ -154,13 +177,32 @@ export default defineComponent({
             },
           ],
         },
-      ]
-    }
+      ].reverse(),
+      today: [],
+    };
+  },
+  mounted(){
+    this.getToday();
   },
   methods: {
-    // getMyMeals() {
-    //   this.allMeals = this.allMeals.reverse();
-    // },
+    formatDate(value) {
+      const date = new Date(value);
+      return date.toDateString();
+    },
+    getToday(){
+      this.today = this.allMeals.filter((res) => {
+        const date1 = new Date(res.date_created).toDateString();
+        const date2 = new Date().toDateString();
+        console.log(date1, date2);
+        if(date1 === date2) return res;
+      });
+      this.allMeals = this.allMeals.filter((res) => {
+        const date1 = new Date(res.date_created).toDateString();
+        const date2 = new Date().toDateString();
+        console.log(date1, date2);
+        if(date1 !== date2) return res;
+      });
+    }
   },
 });
 </script>
@@ -189,7 +231,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
+  padding: 32px 16px;
   width: 100%;
   overflow-x: scroll;
   height: 91vh;
@@ -201,7 +243,7 @@ h3 {
   gap: 25px;
   width: calc(100vw - 32px);
   background: #fafafa;
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 16px;
 }
@@ -209,12 +251,14 @@ h3 {
 .card .img {
   height: 100%;
   width: 80px;
+  border-radius: 8px;
 }
 
 .card .img img {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: 8px;
 }
 .content_between {
   display: flex;
