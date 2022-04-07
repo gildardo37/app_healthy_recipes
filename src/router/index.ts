@@ -6,11 +6,17 @@ import Signup from "@/views/SignupView.vue";
 import EditProfile from "@/views/EditProfile.vue";
 import ChangePassword from "@/views/ChangePassword.vue";
 import MyMeals from "@/views/MyMeals.vue";
+import client from "@/client";
+
+const validateLogin = async (to: any, from: any) => {
+  const data = await client.validateToken();
+  return data.message ? { path: 'login' } : true;
+}
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/",
+    redirect: "/login",
   },
   {
     path: "/login",
@@ -26,21 +32,25 @@ const routes: Array<RouteRecordRaw> = [
     path: "/profile",
     name: "profile",
     component: Profile,
+    beforeEnter: [validateLogin]
   },
   {
     path: "/editprofile",
     name: "editprofile",
     component: EditProfile,
+    beforeEnter: [validateLogin]
   },
   {
     path: "/changepassword",
     name: "changepassword",
     component: ChangePassword,
+    beforeEnter: [validateLogin]
   },
   {
     path: "/mymeals",
     name: "mymeals",
     component: MyMeals,
+    beforeEnter: [validateLogin]
   },
 ];
 

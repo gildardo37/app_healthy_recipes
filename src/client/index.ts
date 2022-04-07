@@ -16,7 +16,6 @@ const client = {
     return await res.json();
   },
   async getMyMeals() {
-    console.log(this.getToken())
     const res = await fetch(`${API}/my_meals/getAll`, {
       method: "GET",
       headers: {
@@ -24,7 +23,16 @@ const client = {
         "Authorization": this.setToken()
       },
     });
-    console.log(res)
+    return await res.json();
+  },
+  async validateToken() {
+    const res = await fetch(`${API}/users/validateToken`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.setToken()
+      },
+    });
     return await res.json();
   },
   saveToken(token: string): boolean {

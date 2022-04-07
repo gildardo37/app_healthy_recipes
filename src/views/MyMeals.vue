@@ -78,12 +78,12 @@ export default defineComponent({
         const date1 = new Date(res.date_created).toDateString();
         const date2 = new Date().toDateString();
         if(date1 === date2) return res;
-      });
+      }).reverse();
       this.allMeals = data.filter((res) => {
         const date1 = new Date(res.date_created).toDateString();
         const date2 = new Date().toDateString();
         if(date1 !== date2) return res;
-      });
+      }).reverse();
     }
   },
 });
