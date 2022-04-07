@@ -57,7 +57,7 @@ import client from "@/client";
 
 
 export default defineComponent({
-  name: "ProfileView",
+  name: "MyMeals",
   components: { VNav },
   data() {
     return {

@@ -6,6 +6,7 @@ import Signup from "@/views/SignupView.vue";
 import EditProfile from "@/views/EditProfile.vue";
 import ChangePassword from "@/views/ChangePassword.vue";
 import MyMeals from "@/views/MyMeals.vue";
+import NewRecipes from "@/views/NewRecipes.vue";
 import client from "@/client";
 
 const validateLogin = async (to: any, from: any) => {
@@ -50,6 +51,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/mymeals",
     name: "mymeals",
     component: MyMeals,
+    beforeEnter: [validateLogin]
+  },
+  {
+    path: "/newrecipes",
+    name: "newrecipes",
+    component: NewRecipes,
     beforeEnter: [validateLogin]
   },
 ];
