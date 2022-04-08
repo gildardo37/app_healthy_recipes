@@ -1,66 +1,70 @@
 <template>
-  <main>
+  <ion-page>
     <v-nav title="My Meals"></v-nav>
-    <div class="bg-orange">
-      <div class="card_content">
-        <template v-for="meal in today" :key="meal.id_meal">
-          <div class="today">
-            <h3>Todays Meals</h3>
-            <span @click="deleteMeal(meal.id_meal)">Delete meal</span>
-          </div>
-          <template v-for="m in meal.meals" :key="m.id_meal">
-            <section class="card">
-              <div class="img">
-                <img
-                  src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
-                  alt=""
-                />
-              </div>
-              <div class="content">
-                <h3>{{ m.title }}</h3>
-                <small>{{ formatDate(meal.date_created) }}</small>
-                <div class="content_between">
-                  <span class="blue_text">{{ m.type }}</span>
-                  <h3>{{ m.ready_in_minutes }} min</h3>
+    <ion-content class="main">
+      <div class="bg-orange">
+        <div class="card_content">
+          <template v-for="meal in today" :key="meal.id_meal">
+            <div class="today">
+              <h3>Todays Meals</h3>
+              <span @click="deleteMeal(meal.id_meal)">Delete meal</span>
+            </div>
+            <template v-for="m in meal.meals" :key="m.id_meal">
+              <section class="card">
+                <div class="img">
+                  <img
+                    src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
+                    alt=""
+                  />
                 </div>
-              </div>
-            </section>
-          </template>
-        </template>
-        <template v-for="(meal, index) in allMeals" :key="meal.id_meal">
-          <h3 v-if="index == 0">All Meals</h3>
-          <template v-for="m in meal.meals" :key="m.id_meal">
-            <section class="card">
-              <div class="img">
-                <img
-                  src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
-                  alt=""
-                />
-              </div>
-              <div class="content">
-                <h3>{{ m.title }}</h3>
-                <small>{{ formatDate(meal.date_created) }}</small>
-                <div class="content_between">
-                  <span class="blue_text">{{ m.type }}</span>
-                  <h3>{{ m.ready_in_minutes }} min</h3>
+                <div class="content">
+                  <h3>{{ m.title }}</h3>
+                  <small>{{ formatDate(meal.date_created) }}</small>
+                  <div class="content_between">
+                    <span class="blue_text">{{ m.type }}</span>
+                    <h3>{{ m.ready_in_minutes }} min</h3>
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </template>
           </template>
-        </template>
+          <template v-for="(meal, index) in allMeals" :key="meal.id_meal">
+            <h3 v-if="index == 0">All Meals</h3>
+            <template v-for="m in meal.meals" :key="m.id_meal">
+              <section class="card">
+                <div class="img">
+                  <img
+                    src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="content">
+                  <h3>{{ m.title }}</h3>
+                  <small>{{ formatDate(meal.date_created) }}</small>
+                  <div class="content_between">
+                    <span class="blue_text">{{ m.type }}</span>
+                    <h3>{{ m.ready_in_minutes }} min</h3>
+                  </div>
+                </div>
+              </section>
+            </template>
+          </template>
+        </div>
       </div>
-    </div>
-  </main>
+      <main-nav></main-nav>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
 import client from "@/client";
+import MainNav from "@/components/MainNav.vue";
 
 export default defineComponent({
   name: "MyMeals",
-  components: { VNav },
+  components: { VNav, MainNav },
   data() {
     return {
       allMeals: [],
@@ -100,10 +104,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-main {
+.main {
   background: #fafafa;
-  width: 100vw;
-  height: 100vh;
 }
 .bg-orange {
   background: #fe9d5c;
@@ -118,7 +120,6 @@ h3 {
 }
 .card_content {
   position: absolute;
-  top: 72px;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -126,7 +127,7 @@ h3 {
   padding: 32px 16px;
   width: 100%;
   overflow-x: scroll;
-  height: 91vh;
+  height: calc(100% - 122px);
 }
 
 .card {

@@ -1,44 +1,47 @@
 <template>
-  <main>
+  <ion-page>
     <v-nav title="Profile"></v-nav>
-    <div class="bg-orange">
-      <section class="card">
-        <div class="info">
-          <img
-            class="profile_picture"
-            src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
-            alt="profile picture"
-          />
-          <div class="rows">
-            <h5>Darlen Leon</h5>
-            <span>darlene.rodriguex@mail.com</span>
-            <p>21 years old. Female</p>
+    <ion-content>
+      <div class="bg-orange">
+        <section class="card">
+          <div class="info">
+            <img
+              class="profile_picture"
+              src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
+              alt="profile picture"
+            />
+            <div class="rows">
+              <h5>Darlen Leon</h5>
+              <span>darlene.rodriguex@mail.com</span>
+              <p>21 years old. Female</p>
+            </div>
           </div>
-        </div>
-        <div class="divider" />
-        <div class="metadata">
-          <meta-displayer imageName="height" value="169" prefix="CM" />
-          <meta-displayer imageName="calories" value="2,000" prefix="Cal" />
-          <meta-displayer imageName="weight" value="156" prefix="KG" />
-          <meta-displayer imageName="bmi" value="24.5" prefix="BMI" />
-        </div>
+          <div class="divider" />
+          <div class="metadata">
+            <meta-displayer imageName="height" value="169" prefix="CM" />
+            <meta-displayer imageName="calories" value="2,000" prefix="Cal" />
+            <meta-displayer imageName="weight" value="156" prefix="KG" />
+            <meta-displayer imageName="bmi" value="24.5" prefix="BMI" />
+          </div>
+        </section>
+      </div>
+      <section class="actions">
+        <row-profile to="/editprofile">
+          <h5>Edit Profile</h5>
+        </row-profile>
+        <row-profile to="/changepassword">
+          <h5>Change Password</h5>
+        </row-profile>
+        <row-profile to="/logout">
+          <div class="logout">
+            <img src="/assets/logout.svg" alt="logout" />
+            <h5>Logout</h5>
+          </div>
+        </row-profile>
       </section>
-    </div>
-    <section class="actions">
-      <row-profile to="/editprofile">
-        <h5>Edit Profile</h5>
-      </row-profile>
-      <row-profile to="/changepassword">
-        <h5>Change Password</h5>
-      </row-profile>
-      <row-profile to="/logout">
-        <div class="logout">
-          <img src="/assets/logout.svg" alt="logout" />
-          <h5>Logout</h5>
-        </div>
-      </row-profile>
-    </section>
-  </main>
+      <main-nav></main-nav>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
@@ -46,31 +49,30 @@ import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
 import MetaDisplayer from "@/components/MetaDisplayer.vue";
 import RowProfile from "@/components/RowProfile.vue";
+import MainNav from "@/components/MainNav.vue";
+
 export default defineComponent({
-  components: { VNav, MetaDisplayer, RowProfile },
+  components: { VNav, MetaDisplayer, RowProfile, MainNav },
   name: "ProfileView",
 });
 </script>
 
 <style scoped>
-main {
+.main {
   background: #fafafa;
-  width: 100vw;
-  height: 100vh;
 }
 .bg-orange {
   background: #fe9d5c;
   width: 100vw;
-  height: 210px;
+  height: 200px;
 }
 .card {
   position: absolute;
-  margin: 0 16px;
-  top: 112px;
+  margin: 42px 16px;
   width: calc(100vw - 32px);
   height: 213px;
   background: #fafafa;
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   padding: 16px;
 }
@@ -120,7 +122,7 @@ h5 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 5px;
+  gap: 16px;
 }
 .actions {
   display: flex;

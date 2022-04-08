@@ -1,38 +1,42 @@
 <template>
-  <main>
+<ion-page>
     <v-nav title="New Recipes"></v-nav>
-    <div class="card_content" v-if="today == true">
-      <div class="title">
-        <h3>Generate a new meal</h3>
-        <h3>{{ calories }} calories</h3>
-      </div>
-      <v-button type="solid" @click="getMeal()"> Search</v-button>
-      <div class="meal_content" v-if="meals.meals">
-        <div class="content">
-          <h2>Results</h2>
-          <section class="card" v-for="(m, index) in meals.meals" :key="index">
-            <div class="img">
-              <img
-                src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
-                alt=""
-              />
-            </div>
-            <div class="content">
-              <h3>{{ m.title }}</h3>
-              <div class="content_between">
-                <span class="blue_text">{{ mealType(index) }}</span>
-                <h3>{{ m.readyInMinutes }} min</h3>
-              </div>
-            </div>
-          </section>
+    <ion-content class="main">
+      <div class="card_content" v-if="today == true">
+        <div class="title">
+          <h3>Generate a new meal</h3>
+          <h3>{{ calories }} calories</h3>
         </div>
-        <v-button type="border" @click="addMeal()">Add to my meals</v-button>
+        <v-button type="solid" @click="getMeal()"> Search</v-button>
+        <div class="meal_content" v-if="meals.meals">
+          <div class="content">
+            <h2>Results</h2>
+            <section class="card" v-for="(m, index) in meals.meals" :key="index">
+              <div class="img">
+                <img
+                  src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="content">
+                <h3>{{ m.title }}</h3>
+                <div class="content_between">
+                  <span class="blue_text">{{ mealType(index) }}</span>
+                  <h3>{{ m.readyInMinutes }} min</h3>
+                </div>
+              </div>
+            </section>
+          </div>
+          <v-button type="border" @click="addMeal()">Add to my meals</v-button>
+        </div>
       </div>
-    </div>
-    <div class="card_content message" v-if="today == false">
-      <h3>You already added a meal today, go to My Meals to check it.</h3>
-    </div>
-  </main>
+      <div class="card_content message" v-if="today == false">
+        <h3>You already added a meal today, go to My Meals to check it.</h3>
+        <v-button type="solid" @click="goToMeals()">My meals</v-button>
+      </div>
+      <main-nav></main-nav>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script>
@@ -40,21 +44,22 @@ import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
 import client from "@/client";
 import VButton from "@/components/Button.vue";
+import MainNav from "@/components/MainNav.vue";
 
 export default defineComponent({
   name: "NewRecipes",
-  components: { VNav, VButton },
+  components: { VButton, MainNav, VNav },
   data() {
     return {
       meals: [],
       user: {},
       calories: 0,
-      today: false,
+      today: true,
     };
   },
-  async mounted() {
-    await this.getUserInfo();
-    await this.getTodaysMeal();
+  mounted() {
+    this.getUserInfo();
+    this.getTodaysMeal();
   },
   methods: {
     async getMeal() {
@@ -88,20 +93,17 @@ export default defineComponent({
       });
       this.today = filtered.length > 0 ? false : true;
     },
+    async goToMeals(){
+      this.$router.push({ path: "/mymeals" });
+      setTimeout(()=> window.location.reload(), 100)
+    }
   },
 });
 </script>
 
 <style scoped>
-main {
+.main {
   background: #fafafa;
-  width: 100vw;
-  height: 100vh;
-}
-.bg-orange {
-  background: #fe9d5c;
-  width: 100vw;
-  height: 210px;
 }
 .title {
   display: flex;
@@ -124,7 +126,6 @@ h3 {
 }
 .card_content {
   position: absolute;
-  top: 72px;
   margin: 0;
   display: flex;
   flex-direction: column;
@@ -132,7 +133,7 @@ h3 {
   padding: 32px 16px;
   width: 100%;
   overflow-x: scroll;
-  height: 91vh;
+  height: calc(100% - 122px);
 }
 
 .message h3 {
@@ -168,7 +169,6 @@ h3 {
 }
 .blue_text {
   color: #497bea;
-  text-decoration: underline;
   font-size: 14px;
 }
 
@@ -191,7 +191,6 @@ h3 {
   flex-direction: column;
   gap: 16px;
   height: 100%;
-  justify-content: space-between;
 }
 
 .meal_content .content {

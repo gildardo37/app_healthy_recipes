@@ -23,6 +23,10 @@ const validateLoggedIn = async (to: any, from: any) => {
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    redirect: "home"
+  },
+  {
+    path: "/home",
     name: "home",
     component: HomeView,
     beforeEnter: [validateLogin],

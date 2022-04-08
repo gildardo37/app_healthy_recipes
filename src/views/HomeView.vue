@@ -1,70 +1,76 @@
 <template>
-  <header>
-    <h5>
-      Welcome, <strong>{{ name }}!</strong>
-    </h5>
-    <img
-      class="profile_picture"
-      src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
-      alt="profile picture"
-    />
-  </header>
-  <div class="bg-orange">
-    <div class="main">
-      <section>
-        <div class="card">
-          <div class="card-header">
-            <img
-              class="food_image"
-              src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div class="card-content">
-            <div class="row">
-              <span>Avocado explosive salad</span>
-              <span><strong>13 min</strong> prep</span>
+  <ion-page>
+    <ion-content>
+      <header>
+        <h5>
+          Welcome, <strong>{{ name }}!</strong>
+        </h5>
+        <img
+          class="profile_picture"
+          src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
+          alt="profile picture"
+        />
+      </header>
+      <div class="bg-orange">
+        <div class="main">
+          <section>
+            <div class="card">
+              <div class="card-header">
+                <img
+                  class="food_image"
+                  src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
+                  alt=""
+                  srcset=""
+                />
+              </div>
+              <div class="card-content">
+                <div class="row">
+                  <span>Avocado explosive salad</span>
+                  <span><strong>13 min</strong> prep</span>
+                </div>
+                <div class="breakfast">Breakfast</div>
+                <v-button @click="handlePreparedMeal" type="border"
+                  >Prepare your next meal</v-button
+                >
+              </div>
             </div>
-            <div class="breakfast">Breakfast</div>
-            <v-button @click="handlePreparedMeal" type="border"
-              >Prepare your next meal</v-button
-            >
-          </div>
+          </section>
+          <section>
+            <h3>Diets you might be into</h3>
+            <div class="diets">
+              <div class="mini-card">
+                <img src="/assets/diet.png" alt="my images" />
+                <strong><span>The vegan Diet</span></strong>
+                <span>Healthy</span>
+              </div>
+              <div class="mini-card">
+                <img src="/assets/energetic.png" alt="my images" />
+                <strong><span>Low-Carb Diet</span></strong>
+                <span>Energetic</span>
+              </div>
+              <div class="mini-card">
+                <img src="/assets/classic.png" alt="my images" />
+                <strong><span>Mediterraneo</span></strong>
+                <span>Classic</span>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-      <section>
-        <h3>Diets you might be into</h3>
-        <div class="diets">
-          <div class="mini-card">
-            <img src="/assets/diet.png" alt="my images" />
-            <strong><span>The vegan Diet</span></strong>
-            <span>Healthy</span>
-          </div>
-          <div class="mini-card">
-            <img src="/assets/energetic.png" alt="my images" />
-            <strong><span>Low-Carb Diet</span></strong>
-            <span>Energetic</span>
-          </div>
-          <div class="mini-card">
-            <img src="/assets/classic.png" alt="my images" />
-            <strong><span>Mediterraneo</span></strong>
-            <span>Classic</span>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
+      </div>
+      <main-nav></main-nav>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import VButton from "@/components/Button.vue";
+import MainNav from "@/components/MainNav.vue";
 import client from "@/client";
 import { useRouter } from "vue-router";
 
 export default defineComponent({
-  components: { VButton },
+  components: { VButton, MainNav },
 
   setup() {
     let meal = ref();
@@ -134,15 +140,11 @@ header h5 {
 }
 .main {
   position: absolute;
-  top: 60px;
-  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 32px 16px;
   width: 100%;
-  overflow-x: scroll;
-  height: 91vh;
 }
 .card {
   border-radius: 8px;
@@ -179,6 +181,7 @@ header h5 {
   display: grid;
   grid-template-columns: repeat(3, 140px);
   gap: 5px;
+  overflow-y: auto;
 }
 .mini-card {
   padding: 2px;

@@ -61,9 +61,8 @@ export default defineComponent({
         }
 
         client.saveToken(login_response.token);
-        this.$router.push({name:"mymeals"});
-        // refactor: use ionic router
-        // setTimeout(()=>window.location.reload(),100)
+        this.$router.push({ name:"home" });
+        setTimeout(()=>window.location.reload(),100)
         console.log("upto here");
       } catch (error) {
         console.log(error);

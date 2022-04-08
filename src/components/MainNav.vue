@@ -1,20 +1,20 @@
 <template>
   <nav class="sub_menu">
-    <div :class="classes.home">
+    <div :class="classes.home" @click="goTo('home')">
       <div><img src="/assets/home.svg" alt="home" srcset="" /></div>
       <span>Home</span>
     </div>
-    <div :class="classes.stats">
-      <div><img src="/assets/stats.svg" alt="stats" srcset="" /></div>
-      <span>My stats</span>
-    </div>
-    <div :class="classes.newRecipes">
+    <div :class="classes.newRecipes" @click="goTo('newrecipes')">
       <div><img src="/assets/search.svg" alt="newRecipes" srcset="" /></div>
       <span>New Recipes</span>
     </div>
-    <div :class="classes.calendar">
+    <div :class="classes.calendar" @click="goTo('mymeals')">
       <div><img src="/assets/calendar.svg" alt="calendar" srcset="" /></div>
       <span>My meals</span>
+    </div>
+    <div :class="classes.stats" @click="goTo('profile')">
+      <div><img src="/assets/stats.svg" alt="profile" srcset="" /></div>
+      <span>Profile</span>
     </div>
   </nav>
 </template>
@@ -28,21 +28,27 @@ export default defineComponent({
     const router = useRouter();
     const { currentRoute } = router;
     const route = currentRoute.value.path.toString().replace("/", "");
-    console.log(route)
-    const newRecipesPaths = [''];
-    const statsPaths = ['mystats'];
+    const newRecipesPaths = ['newrecipes'];
+    const profilePaths = ['profile'];
     const calendarPaths = ['mymeals'];
 
     const classes = computed(() => {
       return {
         home: `item ${route == 'home' && "selected"}`,
         newRecipes: `item ${newRecipesPaths.includes(route) && "selected"}`,
-        stats: `item ${statsPaths.includes(route) && "selected"}`,
+        stats: `item ${profilePaths.includes(route) && "selected"}`,
         calendar: `item ${calendarPaths.includes(route) && "selected"}`,
       };
     });
+    
+    const goTo = (route: string) => {
+      router.push(route);
+      setTimeout(()=> window.location.reload(), 150);
+    }
+    
     return {
       classes,
+      goTo
     };
   },
 });
