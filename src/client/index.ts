@@ -98,6 +98,20 @@ const client = {
     });
     return await res.json();
   },
+  async concludeMeal(id_meal: any) {
+    const res = await fetch(`${API}/my_meals/checkMeal`, {
+      method: "PUT",
+      body: JSON.stringify({
+        id_meal,
+        checked: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.setToken(),
+      },
+    });
+    return await res.json();
+  },
   async getNextMeal() {
     const res = await fetch(`${API}/my_meals/dailyMeal`, {
       method: "GET",
@@ -108,8 +122,8 @@ const client = {
     });
     return await res.json();
   },
-  async changePassword(old_password: string, new_password: string){
-    const data = { old_password, new_password }
+  async changePassword(old_password: string, new_password: string) {
+    const data = { old_password, new_password };
     const res = await fetch(`${API}/users/updatePassword`, {
       method: "PUT",
       headers: {
