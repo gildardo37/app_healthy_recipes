@@ -78,7 +78,7 @@ export default defineComponent({
       if (index === 1) return "Meal";
       if (index === 2) return "Dinner";
     },
-    getTodaysMeal() {
+    async getTodaysMeal() {
       const { data } = await client.getMyMeals();
       this.today = data
         .filter((res) => {
