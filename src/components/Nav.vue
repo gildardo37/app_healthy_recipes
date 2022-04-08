@@ -1,8 +1,9 @@
 <template>
   <header class="nav">
-    <div v-show="showGoBack" @click="goBack">
+    <div v-if="showGoBack" @click="goBack">
       <img src="/assets/arrow-left.svg" alt="go-back" />
     </div>
+    <div v-else>&nbsp;</div>
     <h2>{{ title }}</h2>
     <div><slot name="icon"></slot></div>
   </header>
