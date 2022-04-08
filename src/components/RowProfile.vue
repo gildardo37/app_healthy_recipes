@@ -18,7 +18,10 @@ export default defineComponent({
   setup(props) {
     const router = useRouter();
 
-    const goTo = () => router.push(props.to || "");
+    const goTo = () => {
+      router.push(props.to || "");
+      setTimeout(()=> window.location.reload(), 200);
+    }
 
     return { goTo };
   },

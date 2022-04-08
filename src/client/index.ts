@@ -98,6 +98,18 @@ const client = {
     });
     return await res.json();
   },
+  async changePassword(old_password: string, new_password: string){
+    const data = { old_password, new_password }
+    const res = await fetch(`${API}/users/updatePassword`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.setToken(),
+      },
+      body: JSON.stringify(data),
+    });
+    return await res.json();
+  },
   saveToken(token: string): boolean {
     localStorage.setItem(TOKEN_KEY, token);
     return typeof localStorage.getItem(TOKEN_KEY) !== "undefined";

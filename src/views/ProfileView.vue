@@ -3,7 +3,7 @@
     <v-nav title="Profile"></v-nav>
     <ion-content>
       <div class="bg-orange">
-        <section class="card">
+        <section class="card" v-if="user">
           <div class="info">
             <img
               class="profile_picture"
@@ -11,17 +11,17 @@
               alt="profile picture"
             />
             <div class="rows">
-              <h5>Darlen Leon</h5>
-              <span>darlene.rodriguex@mail.com</span>
-              <p>21 years old. Female</p>
+              <h5>{{ user.name }}</h5>
+              <span>{{ user.email }}</span>
+              <p>{{ user.age + " years, " + user.gender }}</p>
             </div>
           </div>
           <div class="divider" />
           <div class="metadata">
-            <meta-displayer imageName="height" value="169" prefix="CM" />
-            <meta-displayer imageName="calories" value="2,000" prefix="Cal" />
-            <meta-displayer imageName="weight" value="156" prefix="KG" />
-            <meta-displayer imageName="bmi" value="24.5" prefix="BMI" />
+            <meta-displayer imageName="height" :value="user.height" prefix="CM" />
+            <meta-displayer imageName="calories" :value="user.health.calories" prefix="Cal" />
+            <meta-displayer imageName="weight" :value="user.weight" prefix="KG" />
+            <meta-displayer imageName="bmi" :value="user.health.imc" prefix="BMI" />
           </div>
         </section>
       </div>
@@ -45,15 +45,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import VNav from "@/components/Nav.vue";
 import MetaDisplayer from "@/components/MetaDisplayer.vue";
 import RowProfile from "@/components/RowProfile.vue";
 import MainNav from "@/components/MainNav.vue";
+import client from "@/client";
 
 export default defineComponent({
   components: { VNav, MetaDisplayer, RowProfile, MainNav },
   name: "ProfileView",
+  setup(){
+    const user = ref();
+
+    const getUser = async () => {
+      const { data } = await client.getUserInfo();
+      user.value = data;
+      console.log(user.value);
+    }
+    getUser();
+    return{
+      user
+    }
+  }
 });
 </script>
 
