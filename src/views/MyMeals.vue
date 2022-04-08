@@ -10,7 +10,7 @@
               <span @click="deleteMeal(meal.id_meal)">Delete meal</span>
             </div>
             <template v-for="m in meal.meals" :key="m.id_meal">
-              <section class="card">
+              <section class="card" @click="open(m.image)">
                 <div class="img">
                   <img
                     src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
@@ -31,7 +31,7 @@
           <template v-for="(meal, index) in allMeals" :key="meal.id_meal">
             <h3 v-if="index == 0">All Meals</h3>
             <template v-for="m in meal.meals" :key="m.id_meal">
-              <section class="card">
+              <section @click="open(m.image)" class="card">
                 <div class="img">
                   <img
                     src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
@@ -77,6 +77,9 @@ export default defineComponent({
   methods: {
     formatDate(value) {
       return new Date(value).toDateString();
+    },
+    open(url){
+      window.open(url,"_blank");
     },
     async getToday() {
       const { data } = await client.getMyMeals();
