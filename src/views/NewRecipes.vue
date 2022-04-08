@@ -2,7 +2,32 @@
   <main>
     <v-nav title="New Recipes"></v-nav>
     <div class="card_content">
-      <h3>Select your calories range</h3>
+      <div class="title">
+        <h3>Generate a new meal</h3>
+        <h3>{{ calories }} calories</h3>
+      </div>
+      <v-button type="solid" @click="getMeal()"> Search</v-button>
+      <div class="meal_content" v-if="meals.meals">
+        <div class="content">
+          <h2>Results</h2>
+          <section class="card" v-for="(m, index) in meals.meals" :key="index">
+            <div class="img">
+              <img
+                src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
+                alt=""
+              />
+            </div>
+            <div class="content">
+              <h3>{{ m.title }}</h3>
+              <div class="content_between">
+                <span class="blue_text">{{ mealType(index) }}</span>
+                <h3>{{ m.readyInMinutes }} min</h3>
+              </div>
+            </div>
+          </section>
+        </div>
+        <v-button type="border" @click="addMeal()">Add to my meals</v-button>
+      </div>
     </div>
   </main>
 </template>
@@ -11,11 +36,59 @@
 import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
 import client from "@/client";
-
+import VButton from "@/components/Button.vue";
 
 export default defineComponent({
   name: "NewRecipes",
-  components: { VNav },
+  components: { VNav, VButton },
+  data() {
+    return {
+      meals: [],
+      user: {},
+      calories: 0,
+    };
+  },
+  mounted() {
+    this.getUserInfo();
+    this.getTodaysMeal();
+  },
+  methods: {
+    async getMeal() {
+      const calories = this.user.health.calories;
+      const data = await client.generateMeal(calories);
+      this.meals = data;
+    },
+    async getUserInfo() {
+      const data = await client.getUserInfo();
+      console.log(data.data.health.calories);
+      this.calories = data.data.health.calories;
+      this.user = data.data;
+      console.log(this.user);
+    },
+    async addMeal() {
+      console.log(this.meals);
+      const add = await client.addMeal(this.meals);
+      console.log(add);
+    },
+    formatDate(value) {
+      return new Date(value).toDateString();
+    },
+    mealType(index) {
+      if (index === 0) return "Breakfast";
+      if (index === 1) return "Meal";
+      if (index === 2) return "Dinner";
+    },
+    getTodaysMeal() {
+      const { data } = await client.getMyMeals();
+      this.today = data
+        .filter((res) => {
+          const date1 = new Date(res.date_created).toDateString();
+          const date2 = new Date().toDateString();
+          if (date1 === date2) return res;
+        })
+        .reverse();
+    },
+  },
 });
 </script>
 
@@ -29,6 +102,19 @@ main {
   background: #fe9d5c;
   width: 100vw;
   height: 210px;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+.title h3:nth-child(1) {
+  text-align: start;
+}
+.title h3:nth-child(2) {
+  text-align: end;
+}
+h2 {
+  text-align: center;
 }
 
 h3 {
@@ -94,5 +180,19 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.meal_content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.meal_content .content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 </style>

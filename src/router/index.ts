@@ -11,8 +11,13 @@ import client from "@/client";
 
 const validateLogin = async (to: any, from: any) => {
   const data = await client.validateToken();
-  return data.message ? { path: 'login' } : true;
-}
+  return data.message ? { path: "login" } : true;
+};
+
+const validateLoggedIn = async (to: any, from: any) => {
+  const data = await client.validateToken();
+  return data.message ? true : { path: "mymeals" };
+};
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,41 +28,43 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: Login,
+    beforeEnter: [validateLoggedIn],
   },
   {
     path: "/signup",
     name: "signup",
     component: Signup,
+    beforeEnter: [validateLogin],
   },
   {
     path: "/profile",
     name: "profile",
     component: Profile,
-    beforeEnter: [validateLogin]
+    beforeEnter: [validateLogin],
   },
   {
     path: "/editprofile",
     name: "editprofile",
     component: EditProfile,
-    beforeEnter: [validateLogin]
+    beforeEnter: [validateLogin],
   },
   {
     path: "/changepassword",
     name: "changepassword",
     component: ChangePassword,
-    beforeEnter: [validateLogin]
+    beforeEnter: [validateLogin],
   },
   {
     path: "/mymeals",
     name: "mymeals",
     component: MyMeals,
-    beforeEnter: [validateLogin]
+    beforeEnter: [validateLogin],
   },
   {
     path: "/newrecipes",
     name: "newrecipes",
     component: NewRecipes,
-    beforeEnter: [validateLogin]
+    beforeEnter: [validateLogin],
   },
 ];
 

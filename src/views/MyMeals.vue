@@ -6,7 +6,7 @@
         <template v-for="meal in today" :key="meal.id_meal">
           <h3>Todays Meals</h3>
           <template v-for="m in meal.meals" :key="m.id_meal">
-            <section class="card" >
+            <section class="card">
               <div class="img">
                 <img
                   src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
@@ -55,7 +55,6 @@ import { defineComponent } from "vue";
 import VNav from "@/components/Nav.vue";
 import client from "@/client";
 
-
 export default defineComponent({
   name: "MyMeals",
   components: { VNav },
@@ -65,26 +64,30 @@ export default defineComponent({
       today: [],
     };
   },
-  mounted(){
+  mounted() {
     this.getToday();
   },
   methods: {
     formatDate(value) {
       return new Date(value).toDateString();
     },
-    async getToday(){
+    async getToday() {
       const { data } = await client.getMyMeals();
-      this.today = data.filter((res) => {
-        const date1 = new Date(res.date_created).toDateString();
-        const date2 = new Date().toDateString();
-        if(date1 === date2) return res;
-      }).reverse();
-      this.allMeals = data.filter((res) => {
-        const date1 = new Date(res.date_created).toDateString();
-        const date2 = new Date().toDateString();
-        if(date1 !== date2) return res;
-      }).reverse();
-    }
+      this.today = data
+        .filter((res) => {
+          const date1 = new Date(res.date_created).toDateString();
+          const date2 = new Date().toDateString();
+          if (date1 === date2) return res;
+        })
+        .reverse();
+      this.allMeals = data
+        .filter((res) => {
+          const date1 = new Date(res.date_created).toDateString();
+          const date2 = new Date().toDateString();
+          if (date1 !== date2) return res;
+        })
+        .reverse();
+    },
   },
 });
 </script>
