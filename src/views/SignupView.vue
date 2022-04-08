@@ -1,6 +1,6 @@
 <template>
   <default-sign-layout
-    :onSubmit="login"
+    :onSubmit="signup"
     :route="route"
     footerLabel="Already have an account?"
     submitTitle="Register"
@@ -8,54 +8,110 @@
     src="/assets/singup-background.svg"
   >
     <ion-list lines="full">
-      <custom-input name="name" type="text" placeholder="Full Name" />
-      <custom-input name="email" type="text" placeholder="E-mail Address" />
-      <custom-input name="password" type="password" placeholder="Password" />
-      <custom-select title="Genre">
+      <custom-input
+        :onChange="onInputChange"
+        name="name"
+        type="text"
+        placeholder="Full Name"
+      />
+      <custom-input
+        :onChange="onInputChange"
+        name="email"
+        type="text"
+        placeholder="E-mail Address"
+      />
+      <custom-input
+        :onChange="onInputChange"
+        name="password"
+        type="password"
+        placeholder="Password"
+      />
+      <custom-select :onChange="onInputChange" name="gender" title="Gender">
         <template>
-          <ion-select-option value="f">Female</ion-select-option>
-          <ion-select-option value="m">Male</ion-select-option>
+          <ion-select-option value="Female">Female</ion-select-option>
+          <ion-select-option value="Male">Male</ion-select-option>
         </template>
       </custom-select>
       <div class="meta-wrappers">
-        <custom-input name="age" type="number" placeholder="Age" />
-        <custom-input name="height" type="number" placeholder="Height (cm)" />
-        <custom-input name="weight" type="number" placeholder="Weight (kg)" />
+        <custom-input
+          :onChange="onInputChange"
+          name="date_of_birth"
+          type="date"
+          placeholder="Date Birth"
+        />
+        <custom-input
+          :onChange="onInputChange"
+          name="height"
+          type="number"
+          placeholder="Height (cm)"
+        />
+        <custom-input
+          :onChange="onInputChange"
+          name="weight"
+          type="number"
+          placeholder="Weight (kg)"
+        />
       </div>
     </ion-list>
   </default-sign-layout>
 </template>
 
 <script lang="ts">
+import { ref } from "vue";
 import { IonList } from "@ionic/vue";
 import DefaultSignLayout from "./DefaultSignLayout.vue";
 import CustomSelect from "@/components/CustomSelect.vue";
 import CustomInput from "@/components/CustomInput.vue";
 import { defineComponent } from "@vue/runtime-core";
+import client from "@/client";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "LoginView",
   components: { DefaultSignLayout, IonList, CustomInput, CustomSelect },
   data() {
     return {
-      username: "",
-      password: "",
       route: {
         to: "/login",
         label: "Log in",
       },
     };
   },
-  methods: {
-    onUsernameChange(event: any) {
-      this.username = event.target.value;
-    },
-    onPasswordChange(event: any) {
-      this.password = event.target.value;
-    },
-    login() {
-      console.log("Login");
-    },
+  setup() {
+    const data = ref<{ [key: string]: string }>();
+    const router = useRouter();
+
+    const onInputChange = (event: any) => {
+      if (!event.target.name || !event.target.value) return;
+
+      data.value = {
+        ...data.value,
+        [event.target.name]: event.target.value,
+      };
+      console.log(data.value);
+    };
+
+    const signup = async () => {
+      try {
+        if (!data.value) return;
+        const body = JSON.stringify(data.value);
+        const signup_response: any = await client.signup(body);
+
+        if (!signup_response.token) {
+          throw new Error("User or email invalid");
+        }
+
+        client.saveToken(signup_response.token);
+        router.push({ name: "mymeals" });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return {
+      onInputChange,
+      signup,
+    };
   },
 });
 </script>

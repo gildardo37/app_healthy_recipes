@@ -1,7 +1,7 @@
 <template>
   <ion-item lines="none">
     <ion-label position="stacked">{{ title }}</ion-label>
-    <ion-select :placeholder="placeholder">
+    <ion-select @ionChange="onChange" :name="name" :placeholder="placeholder">
       <slot></slot>
     </ion-select>
   </ion-item>
@@ -17,6 +17,8 @@ export default defineComponent({
   props: {
     placeholder: String,
     title: String,
+    name: String,
+    onChange: Function,
   },
 });
 </script>

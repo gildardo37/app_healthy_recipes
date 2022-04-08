@@ -61,9 +61,9 @@ export default defineComponent({
         }
 
         client.saveToken(login_response.token);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //@ts-ignore
-        this.$router.push("/signup");
+        this.$router.push({name:"mymeals"});
+        // refactor: use ionic router
+        // setTimeout(()=>window.location.reload(),100)
         console.log("upto here");
       } catch (error) {
         console.log(error);

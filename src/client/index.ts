@@ -15,6 +15,16 @@ const client = {
     });
     return await res.json();
   },
+  async signup(data: string) {
+    const res = await fetch(`${API}/users/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    });
+    return await res.json();
+  },
   async getMyMeals() {
     const res = await fetch(`${API}/my_meals/getAll`, {
       method: "GET",

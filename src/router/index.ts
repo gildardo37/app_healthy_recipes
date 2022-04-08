@@ -17,7 +17,7 @@ const validateLogin = async (to: any, from: any) => {
 
 const validateLoggedIn = async (to: any, from: any) => {
   const data = await client.validateToken();
-  return data.message ? true : { path: "mymeals" };
+  return data.message ? true : { path: "home" };
 };
 
 const routes: Array<RouteRecordRaw> = [
@@ -25,6 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
+    beforeEnter: [validateLogin],
   },
   {
     path: "/login",
@@ -36,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/signup",
     name: "signup",
     component: Signup,
-    beforeEnter: [validateLogin],
+    beforeEnter: [validateLoggedIn],
   },
   {
     path: "/profile",

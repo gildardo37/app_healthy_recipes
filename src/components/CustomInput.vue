@@ -1,7 +1,7 @@
 <template>
   <ion-item lines="none">
     <ion-label position="stacked">{{ placeholder }}</ion-label>
-    <ion-input :type="type" @input="onChange"></ion-input>
+    <ion-input :name="name" :type="type" @input="onChange"></ion-input>
   </ion-item>
 </template>
 
@@ -16,6 +16,7 @@ export default defineComponent({
     placeholder: String,
     type: String,
     onChange: Function,
+    name: String,
   },
 });
 </script>
