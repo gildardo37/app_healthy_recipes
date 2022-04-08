@@ -88,6 +88,16 @@ const client = {
     });
     return await res.json();
   },
+  async getNextMeal(){
+    const res = await fetch(`${API}/my_meals/dailyMeal`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.setToken(),
+      },
+    });
+    return await res.json();
+  },
   saveToken(token: string): boolean {
     localStorage.setItem(TOKEN_KEY, token);
     return typeof localStorage.getItem(TOKEN_KEY) !== "undefined";

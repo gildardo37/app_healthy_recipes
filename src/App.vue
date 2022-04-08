@@ -27,4 +27,7 @@ export default defineComponent({
 .has-focus {
   border: 1px solid var(--ion-color-secondary);
 }
+body {
+  background: #fafafa !important;
+}
 </style>
