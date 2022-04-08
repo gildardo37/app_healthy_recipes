@@ -95,7 +95,7 @@ export default defineComponent({
     },
     async goToMeals(){
       this.$router.push({ path: "/mymeals" });
-      setTimeout(()=> window.location.reload(), 100)
+      setTimeout(()=> window.location.reload(), 200)
     }
   },
 });

@@ -93,7 +93,7 @@ export default defineComponent({
     };
     const handlePreparedMeal = () => {
       router.push({ name: "newrecipes" });
-      setTimeout(() => window.location.reload(), 100);
+      setTimeout(() => window.location.reload(), 200);
     };
     const getUserInfo = async () => {
       // Get user information

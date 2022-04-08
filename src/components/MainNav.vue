@@ -43,7 +43,7 @@ export default defineComponent({
     
     const goTo = (route: string) => {
       router.push(route);
-      setTimeout(()=> window.location.reload(), 150);
+      setTimeout(()=> window.location.reload(), 200);
     }
     
     return {

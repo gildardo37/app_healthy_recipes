@@ -62,7 +62,7 @@ export default defineComponent({
 
         client.saveToken(login_response.token);
         this.$router.push({ name:"home" });
-        setTimeout(()=>window.location.reload(),100)
+        setTimeout(()=>window.location.reload(),200)
         console.log("upto here");
       } catch (error) {
         console.log(error);
