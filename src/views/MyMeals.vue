@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <v-nav title="My Meals"></v-nav>
+    <v-nav title="My Meals" :showGoBack="false"></v-nav>
     <ion-content class="main">
       <div class="bg-orange">
         <div class="card_content">

@@ -183,6 +183,11 @@ header h5 {
   gap: 5px;
   overflow-y: auto;
 }
+
+.diets::-webkit-scrollbar {
+  display: none;
+}
+
 .mini-card {
   padding: 2px;
   display: flex;

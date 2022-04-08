@@ -1,13 +1,13 @@
 <template>
 <ion-page>
-    <v-nav title="New Recipes"></v-nav>
+    <v-nav title="New Recipes" :showGoBack="false"></v-nav>
     <ion-content class="main">
       <div class="card_content" v-if="today == true">
         <div class="title">
           <h3>Generate a new meal</h3>
           <h3>{{ calories }} calories</h3>
         </div>
-        <v-button type="solid" @click="getMeal()"> Search</v-button>
+        <v-button type="solid" @click="getMeal()"> {{ meals.meals ? 'More Recipes' : 'Search' }}</v-button>
         <div class="meal_content" v-if="meals.meals">
           <div class="content">
             <h2>Results</h2>

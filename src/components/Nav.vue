@@ -45,5 +45,7 @@ h2 {
   line-height: 25px;
   letter-spacing: 0em;
   text-align: left;
+  text-align: center;
 }
+
 </style>
