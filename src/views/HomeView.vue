@@ -5,32 +5,52 @@
         <h5>
           Welcome, <strong>{{ name }}!</strong>
         </h5>
-        <img
-          class="profile_picture"
-          src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
-          alt="profile picture"
-        />
+        <div>&nbsp;</div>
       </header>
       <div class="bg-orange">
         <div class="main">
           <section>
-            <div class="card">
+            <div class="card" v-if="meal">
+              <div class="card-header">
+                <a target="_blank" :href="meal.image">
+                  <img
+                    class="food_image"
+                    src="https://grillsfusionparrilla.com/wp-content/uploads/2020/10/platillos2-1024x1024.png"
+                    alt=""
+                    srcset=""
+                  />
+                </a>
+              </div>
+              <div class="card-content">
+                <div class="row">
+                  <span>{{ meal.title }}</span>
+                  <span
+                    ><strong>{{ meal.ready_in_minutes }} min</strong></span
+                  >
+                </div>
+                <div class="breakfast">{{ meal.type }}</div>
+                <v-button
+                  @click="goTo({ name: 'nextmeal', params: { id: meal.id_meal } })"
+                  type="border"
+                  >Prepare your next meal</v-button
+                >
+              </div>
+            </div>
+            <div class="card" v-else>
               <div class="card-header">
                 <img
                   class="food_image"
-                  src="https://play-lh.googleusercontent.com/fk1PBadTRlGq67UFQ_3Wx0GGgz929AUNpmyKa8vGaoT1UovXKssiPpurOMQo9bhc_Eo"
+                  src="https://grillsfusionparrilla.com/wp-content/uploads/2020/10/platillos2-1024x1024.png"
                   alt=""
                   srcset=""
                 />
               </div>
               <div class="card-content">
                 <div class="row">
-                  <span>Avocado explosive salad</span>
-                  <span><strong>13 min</strong> prep</span>
+                  <span>Add a meal here</span>
                 </div>
-                <div class="breakfast">Breakfast</div>
-                <v-button @click="handlePreparedMeal" type="border"
-                  >Prepare your next meal</v-button
+                <v-button @click="goTo({ name: 'mealrecipes' })" type="border"
+                  >Add a meal here</v-button
                 >
               </div>
             </div>
@@ -86,13 +106,15 @@ export default defineComponent({
       // Get meal info
       try {
         const { data } = await client.getNextMeal();
-        meal.value = data;
+        meal.value = data.meal;
+        console.log(meal.value);
       } catch (error) {
         console.error(error);
       }
     };
-    const handlePreparedMeal = () => {
-      router.push({ name: "newrecipes" });
+    const goTo = (params: any) => {
+      console.log(params);
+      router.push(params);
       setTimeout(() => window.location.reload(), 200);
     };
     const getUserInfo = async () => {
@@ -111,7 +133,7 @@ export default defineComponent({
     return {
       name,
       meal,
-      handlePreparedMeal,
+      goTo,
     };
   },
 });

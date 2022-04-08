@@ -35,6 +35,16 @@ const client = {
     });
     return await res.json();
   },
+  async getMealById(id: string) {
+    const res = await fetch(`${API}/my_meals/getMeal/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.setToken(),
+      },
+    });
+    return await res.json();
+  },
   async getUserInfo() {
     const res = await fetch(`${API}/users/getUser`, {
       method: "GET",
@@ -88,7 +98,7 @@ const client = {
     });
     return await res.json();
   },
-  async getNextMeal(){
+  async getNextMeal() {
     const res = await fetch(`${API}/my_meals/dailyMeal`, {
       method: "GET",
       headers: {
