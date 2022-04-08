@@ -68,6 +68,16 @@ const client = {
     });
     return await res.json();
   },
+  async deleteMeal(id: any) {
+    const res = await fetch(`${API}/my_meals/deleteMeal/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.setToken(),
+      },
+    });
+    return await res.json();
+  },
   saveToken(token: string): boolean {
     localStorage.setItem(TOKEN_KEY, token);
     return typeof localStorage.getItem(TOKEN_KEY) !== "undefined";

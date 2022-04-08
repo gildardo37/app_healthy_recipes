@@ -4,7 +4,10 @@
     <div class="bg-orange">
       <div class="card_content">
         <template v-for="meal in today" :key="meal.id_meal">
-          <h3>Todays Meals</h3>
+          <div class="today">
+            <h3>Todays Meals</h3>
+            <span @click="deleteMeal(meal.id_meal)">Delete meal</span>
+          </div>
           <template v-for="m in meal.meals" :key="m.id_meal">
             <section class="card">
               <div class="img">
@@ -88,6 +91,10 @@ export default defineComponent({
         })
         .reverse();
     },
+    async deleteMeal(id) {
+      await client.deleteMeal(id);
+      await this.getToday();
+    },
   },
 });
 </script>
@@ -167,5 +174,15 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.today {
+  display: flex;
+  justify-content: space-between;
+}
+
+.today span {
+  color: #fff;
+  cursor: pointer;
 }
 </style>

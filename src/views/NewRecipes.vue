@@ -1,7 +1,7 @@
 <template>
   <main>
     <v-nav title="New Recipes"></v-nav>
-    <div class="card_content">
+    <div class="card_content" v-if="today == true">
       <div class="title">
         <h3>Generate a new meal</h3>
         <h3>{{ calories }} calories</h3>
@@ -29,6 +29,9 @@
         <v-button type="border" @click="addMeal()">Add to my meals</v-button>
       </div>
     </div>
+    <div class="card_content message" v-if="today == false">
+      <h3>You already added a meal today, go to My Meals to check it.</h3>
+    </div>
   </main>
 </template>
 
@@ -46,11 +49,12 @@ export default defineComponent({
       meals: [],
       user: {},
       calories: 0,
+      today: false,
     };
   },
-  mounted() {
-    this.getUserInfo();
-    this.getTodaysMeal();
+  async mounted() {
+    await this.getUserInfo();
+    await this.getTodaysMeal();
   },
   methods: {
     async getMeal() {
@@ -60,15 +64,12 @@ export default defineComponent({
     },
     async getUserInfo() {
       const data = await client.getUserInfo();
-      console.log(data.data.health.calories);
       this.calories = data.data.health.calories;
       this.user = data.data;
-      console.log(this.user);
     },
     async addMeal() {
-      console.log(this.meals);
-      const add = await client.addMeal(this.meals);
-      console.log(add);
+      await client.addMeal(this.meals);
+      this.getTodaysMeal();
     },
     formatDate(value) {
       return new Date(value).toDateString();
@@ -78,15 +79,14 @@ export default defineComponent({
       if (index === 1) return "Meal";
       if (index === 2) return "Dinner";
     },
-    getTodaysMeal() {
+    async getTodaysMeal() {
       const { data } = await client.getMyMeals();
-      this.today = data
-        .filter((res) => {
-          const date1 = new Date(res.date_created).toDateString();
-          const date2 = new Date().toDateString();
-          if (date1 === date2) return res;
-        })
-        .reverse();
+      const filtered = data.filter((res) => {
+        const date1 = new Date(res.date_created).toDateString();
+        const date2 = new Date().toDateString();
+        if (date1 === date2) return res;
+      });
+      this.today = filtered.length > 0 ? false : true;
     },
   },
 });
@@ -133,6 +133,10 @@ h3 {
   width: 100%;
   overflow-x: scroll;
   height: 91vh;
+}
+
+.message h3 {
+  text-align: center;
 }
 
 .card {
