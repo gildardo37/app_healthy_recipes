@@ -9,25 +9,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { defineComponent } from "vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "VNav",
   props: {
     title: String,
+    showGoBack: Boolean,
   },
   setup() {
-    const showGoBack = computed<boolean>(() => {
-      const { path } = useRoute();
-      return path !== "/";
-    });
-
     const router = useRouter();
     const goBack = () => router.back();
 
     return {
-      showGoBack,
       goBack,
     };
   },
