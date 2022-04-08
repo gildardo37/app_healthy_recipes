@@ -8,6 +8,7 @@ import ChangePassword from "@/views/ChangePassword.vue";
 import MyMeals from "@/views/MyMeals.vue";
 import NewRecipes from "@/views/NewRecipes.vue";
 import client from "@/client";
+import HomeView from "@/views/HomeView.vue";
 
 const validateLogin = async (to: any, from: any) => {
   const data = await client.validateToken();
@@ -22,7 +23,8 @@ const validateLoggedIn = async (to: any, from: any) => {
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/login",
+    name: "home",
+    component: HomeView,
   },
   {
     path: "/login",
