@@ -11,7 +11,7 @@
         <div class="meal_content" v-if="meals.meals">
           <div class="content">
             <h2>Results</h2>
-            <section class="card" v-for="(m, index) in meals.meals" :key="index">
+            <section  class="card" v-for="(m, index) in meals.meals" @click="open(m.sourceUrl)" :key="index">
               <div class="img">
                 <img
                   src="https://www.recetasderechupete.com/wp-content/uploads/2021/08/Croquetas-de-brocoli-y-queso-768x530.jpg"
@@ -62,6 +62,9 @@ export default defineComponent({
     this.getTodaysMeal();
   },
   methods: {
+    open(url){
+      window.open(url,"_blank");
+    },
     async getMeal() {
       const calories = this.user.health.calories;
       const data = await client.generateMeal(calories);

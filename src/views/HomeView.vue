@@ -30,7 +30,9 @@
                 </div>
                 <div class="breakfast">{{ meal.type }}</div>
                 <v-button
-                  @click="goTo({ name: 'nextmeal', params: { id: meal.id_meal } })"
+                  @click="
+                    goTo({ name: 'nextmeal', params: { id: meal.id_meal } })
+                  "
                   type="border"
                   >Prepare your next meal</v-button
                 >
@@ -47,9 +49,10 @@
               </div>
               <div class="card-content">
                 <div class="row">
-                  <span>Add a meal here</span>
+                  <span v-if="!hasMealsToday">Add a meal for today</span>
+                  <span v-else>All meals completed</span>
                 </div>
-                <v-button @click="goTo({ name: 'mealrecipes' })" type="border"
+                <v-button v-if="!hasMealsToday" @click="goTo({ name: 'newrecipes' })" type="border"
                   >Add a meal here</v-button
                 >
               </div>
@@ -95,6 +98,8 @@ export default defineComponent({
   setup() {
     let meal = ref();
     let user = ref();
+    let hasMealsToday = ref<boolean>();
+
     const router = useRouter();
     let name = computed(() => {
       const names: string[] = user.value?.name?.split(" ");
@@ -105,13 +110,34 @@ export default defineComponent({
     const getMeal = async () => {
       // Get meal info
       try {
-        const { data } = await client.getNextMeal();
-        meal.value = data.meal;
+        const { data, status } = await client.getNextMeal();
+        if (status == 0 && data) {
+          meal.value = data.meal;
+        } else {
+          meal.value = null;
+        }
         console.log(meal.value);
       } catch (error) {
         console.error(error);
       }
     };
+    const getToday = async () => {
+      const { data } = await client.getMyMeals();
+      const todays = data
+        .filter((res: any) => {
+          const date1 = new Date(res.date_created).toDateString();
+          const date2 = new Date().toDateString();
+          if (date1 === date2) return res;
+        })
+        .reverse();
+
+      if (todays.length == 0) {
+        hasMealsToday.value = false;
+      }else{
+        hasMealsToday.value = true;
+      }
+    };
+
     const goTo = (params: any) => {
       console.log(params);
       router.push(params);
@@ -129,11 +155,13 @@ export default defineComponent({
 
     getMeal();
     getUserInfo();
+    getToday();
 
     return {
       name,
       meal,
       goTo,
+      hasMealsToday,
     };
   },
 });

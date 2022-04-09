@@ -21,7 +21,10 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const goBack = () => router.back();
+    const goBack = () => {
+      router.back();
+      setTimeout(() => window.location.reload(), 200);
+    };
 
     return {
       goBack,
@@ -47,5 +50,4 @@ h2 {
   text-align: left;
   text-align: center;
 }
-
 </style>
