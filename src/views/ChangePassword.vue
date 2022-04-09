@@ -21,8 +21,8 @@
         <v-button type="border" @click="goBack()"> Cancel </v-button>
         <v-button type="solid" @click="updatePass()"> Update Password </v-button>
       </div>
-      <h4 v-if="showMessage">{{ message }}</h4>
-      <h4 v-if="showError">{{ errorMessage }}</h4>
+      <h4 class="correct" v-if="showMessage">{{ message }}</h4>
+      <h4 class="error" v-if="showErrorMessage">{{ errorMessage }}</h4>
       <main-nav></main-nav>
     </ion-content>
   </ion-page>
@@ -67,7 +67,7 @@ export default defineComponent({
             this.newPass
           );
           console.log(response);
-          if(response.status == 0 ){
+          if(response.status === 0 ){
             this.message = response.message;
             this.showMessage = true;
             this.$router.push({ name:"profile" });
@@ -86,7 +86,6 @@ export default defineComponent({
         else {
           this.missingFields = true;
           setTimeout(() => this.missingFields = false, 10000);
-          console.log("all fields!!!")
         }
       } catch (error) {
         console.log(error);
@@ -94,7 +93,7 @@ export default defineComponent({
     },
     goBack(){
       this.$router.push("profile");
-      setTimeout(()=> window.location.reload(), 200);
+      setTimeout(()=> window.location.reload(), 300);
     }
   },
 });
@@ -115,8 +114,15 @@ span{
   font-size: 14px;
 }
 
-h4{
+.correct{
   color: rgb(50, 182, 50);
+  text-align: center;
+  font-size: 18px;
+}
+
+.error{
+  color: red;
+  opacity: 0.8;
   text-align: center;
   font-size: 18px;
 }

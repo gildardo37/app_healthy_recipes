@@ -32,7 +32,7 @@
         <row-profile to="/changepassword">
           <h5>Change Password</h5>
         </row-profile>
-        <row-profile to="/logout">
+        <row-profile @click="logout()">
           <div class="logout">
             <img src="/assets/logout.svg" alt="logout" />
             <h5>Logout</h5>
@@ -51,6 +51,7 @@ import MetaDisplayer from "@/components/MetaDisplayer.vue";
 import RowProfile from "@/components/RowProfile.vue";
 import MainNav from "@/components/MainNav.vue";
 import client from "@/client";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: { VNav, MetaDisplayer, RowProfile, MainNav },
@@ -63,9 +64,20 @@ export default defineComponent({
       user.value = data;
       console.log(user.value);
     }
+
+    const logout = () => {
+      localStorage.removeItem('MY_TOKEN');
+      const router = useRouter();
+      setTimeout(()=> window.location.reload(), 200);
+      router.push("login");
+    }
+
     getUser();
+
+
     return{
-      user
+      user,
+      logout,
     }
   }
 });
