@@ -1,27 +1,29 @@
 <template>
-  <main>
-    <v-nav title="Edit Profile" />
-    <ion-list lines="full">
-      <custom-input name="name" type="file" placeholder="Take photo" />
-      <custom-input name="name" type="text" placeholder="Full Name" />
-      <custom-input name="email" type="text" placeholder="E-mail Address" />
-      <custom-select title="Genre">
-        <template>
-          <ion-select-option value="f">Female</ion-select-option>
-          <ion-select-option value="m">Male</ion-select-option>
-        </template>
-      </custom-select>
-      <div class="meta-wrappers">
-        <custom-input name="age" type="number" placeholder="Age" />
-        <custom-input name="height" type="number" placeholder="Height (cm)" />
-        <custom-input name="weight" type="number" placeholder="Weight (kg)" />
+  <ion-page>
+    <ion-content>
+      <v-nav title="Edit Profile" />
+      <ion-list lines="full">
+        <custom-input name="name" type="text" placeholder="Full Name" />
+        <custom-input name="email" type="text" placeholder="E-mail Address" />
+        <custom-select title="Genre">
+          <template>
+            <ion-select-option value="f">Female</ion-select-option>
+            <ion-select-option value="m">Male</ion-select-option>
+          </template>
+        </custom-select>
+        <div class="meta-wrappers">
+          <custom-input name="age" type="number" placeholder="Age" />
+          <custom-input name="height" type="number" placeholder="Height (cm)" />
+          <custom-input name="weight" type="number" placeholder="Weight (kg)" />
+        </div>
+      </ion-list>
+      <div class="actions">
+        <v-button type="border" @click="goBack()"> Cancel </v-button>
+        <v-button type="solid"> Save </v-button>
       </div>
-    </ion-list>
-    <div class="actions">
-      <v-button type="border"> Cancel </v-button>
-      <v-button type="solid"> Save </v-button>
-    </div>
-  </main>
+      <main-nav></main-nav>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
@@ -31,10 +33,11 @@ import CustomInput from "@/components/CustomInput.vue";
 import VNav from "@/components/Nav.vue";
 import VButton from "@/components/Button.vue";
 import { defineComponent } from "@vue/runtime-core";
+import MainNav from "@/components/MainNav.vue";
 
 export default defineComponent({
   name: "LoginView",
-  components: { IonList, CustomInput, CustomSelect, VNav, VButton },
+  components: { IonList, CustomInput, CustomSelect, VNav, VButton, MainNav },
   data() {
     return {
       username: "",
@@ -54,6 +57,10 @@ export default defineComponent({
     },
     login() {
       console.log("Login");
+    },
+    goBack() {
+      this.$router.push("profile");
+      setTimeout(() => window.location.reload(), 200);
     },
   },
 });

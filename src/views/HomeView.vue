@@ -52,7 +52,10 @@
                   <span v-if="!hasMealsToday">Add a meal for today</span>
                   <span v-else>All meals completed</span>
                 </div>
-                <v-button v-if="!hasMealsToday" @click="goTo({ name: 'newrecipes' })" type="border"
+                <v-button
+                  v-if="!hasMealsToday"
+                  @click="goTo({ name: 'newrecipes' })"
+                  type="border"
                   >Add a meal here</v-button
                 >
               </div>
@@ -133,7 +136,7 @@ export default defineComponent({
 
       if (todays.length == 0) {
         hasMealsToday.value = false;
-      }else{
+      } else {
         hasMealsToday.value = true;
       }
     };
@@ -169,6 +172,7 @@ export default defineComponent({
 
 <style scoped>
 header {
+  height: 70px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -192,8 +196,8 @@ header h5 {
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 32px 16px;
+  gap: 64px;
+  padding: 64px 16px;
   width: 100%;
 }
 .card {
